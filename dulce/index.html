@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ajude o Orfanato da Irmã Dulce</title>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+        color: #333;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    header {
+        padding: 0;
+        border-bottom: none;
+    }
+    header img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+    .container {
+        padding: 15px;
+        max-width: 480px;
+        margin: 0 auto;
+    }
+    #category {
+        text-align: center;
+        color: #888;
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+    h1 {
+        font-size: 1.4rem;
+        margin: 5px 0 10px;
+        text-align: center;
+        line-height: 1.2;
+        color: #0082c0;
+    }
+    h1 strong {
+        font-weight: 700;
+    }
+    .id {
+        text-align: center;
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 15px;
+    }
+    .main-image {
+        width: 100%;
+        border-radius: 8px;
+        margin-top: 10px;
+        display: block;
+        object-fit: cover;
+    }
+    .hearts {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin: 15px 0;
+    }
+    .description {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .description strong {
+        color: #d32f2f;
+    }
+    .faq-section {
+        max-width: 650px;
+        margin: 40px auto;
+        padding: 0 15px;
+    }
+    .faq-section h2 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        font-weight: bold;
+        color: #0082c0;
+    }
+    .faq-section details {
+        background: #fff;
+        border-radius: 12px;
+        padding: 15px 20px;
+        margin-bottom: 12px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .donate-button {
+        display: block;
+        text-align: center;
+        background: #0082c0;
+        color: #fff;
+        font-weight: bold;
+        padding: 14px;
+        border-radius: 8px;
+        text-decoration: none;
+        max-width: 300px;
+        margin: 30px auto;
+        font-size: 1.1rem;
+        transition: background 0.3s ease;
+    }
+    .donate-button:hover {
+        background: #00689b;
+    }
+    /* POPUP */
+    .popup-overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.6);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+    }
+    .popup {
+        background: #fff;
+        border-radius: 10px;
+        max-width: 400px;
+        width: 90%;
+        padding: 20px;
+        position: relative;
+        text-align: center;
+    }
+    .popup img.selo, .popup img.rosary {
+        max-height: 100px;
+        margin-bottom: 10px;
+    }
+    .popup h2 {
+        font-size: 1.2rem;
+        margin: 5px 0;
+    }
+    .popup p {
+        font-size: 0.9rem;
+        color: #555;
+        line-height: 1.4;
+    }
+    .popup-box {
+        background: #e8f6ec;
+        padding: 10px;
+        border-radius: 6px;
+        margin: 15px 0;
+    }
+    .popup-box h3 {
+        color: #1b7d3d;
+        margin-bottom: 5px;
+        font-size: 1rem;
+    }
+    .popup-values {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        margin: 15px 0;
+    }
+    .popup-values a {
+        background: #0082c0;
+        color: #fff;
+        padding: 8px 14px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s;
+        font-size: 0.95rem;
+    }
+    .popup-values a:hover {
+        background: #00689b;
+    }
+    .popup-footer {
+        font-size: 0.85rem;
+        color: #555;
+        margin-top: 10px;
+    }
+    .close-btn {
+        position: absolute;
+        top: 10px; right: 10px;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #333;
+    }
+    /* Comments Section Styling */
+    .comments-section {
+        max-width: 650px;
+        margin: 30px auto;
+        padding: 0 15px;
+    }
+    .comments-section h2 {
+        color: #0082c0;
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+    .comment {
+        background: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .comment img.avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .comment-content {
+        flex: 1;
+    }
+    .comment-content strong {
+        font-weight: bold;
+        color: #333;
+    }
+    .comment-content span {
+        color: #888;
+        font-size: 0.85rem;
+        margin-left: 10px;
+    }
+    .comment-content p {
+        margin-top: 5px;
+        color: #333;
+        font-size: 0.95rem;
+    }
+    .comments-section textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        resize: vertical;
+    }
+    .comments-section button {
+        background: #0082c0;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+    .comments-section button:hover {
+        background: #00689b;
+    }
+    /* New Donation Popup Styling */
+    .rosary-popup-overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0,0,0,0.6);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+    .rosary-popup {
+        background: #fff;
+        border-radius: 10px;
+        max-width: 400px;
+        width: 90%;
+        padding: 20px;
+        position: relative;
+        text-align: center;
+    }
+    .rosary-popup h2 {
+        font-size: 1.2rem;
+        color: #0082c0;
+        margin: 10px 0;
+    }
+    .rosary-popup p {
+        font-size: 0.9rem;
+        color: #333;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+    .rosary-popup a.donate-now {
+        display: inline-block;
+        background: #d32f2f;
+        color: #fff;
+        padding: 12px 20px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1rem;
+        transition: background 0.3s ease;
+    }
+    .rosary-popup a.donate-now:hover {
+        background: #b71c1c;
+    }
+    /* Footer Styling */
+    footer {
+        background: #0082c0;
+        padding: 30px 15px;
+        text-align: center;
+        border-top: 1px solid #e0e0e0;
+        color: #fff;
+    }
+    footer .footer-logo img {
+        max-width: 150px;
+        margin-bottom: 15px;
+    }
+    footer .footer-nav {
+        margin-bottom: 20px;
+    }
+    footer .footer-nav a {
+        color: #fff;
+        text-decoration: none;
+        margin: 0 10px;
+        font-size: 0.95rem;
+        transition: color 0.3s ease;
+    }
+    footer .footer-nav a:hover {
+        color: #e0e0e0;
+    }
+    footer .footer-social {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+    footer .footer-social a img {
+        width: 30px;
+        height: 30px;
+        transition: opacity 0.3s ease;
+    }
+    footer .footer-social a img:hover {
+        opacity: 0.7;
+    }
+    footer .footer-contact {
+        font-size: 0.85rem;
+        color: #fff;
+        line-height: 1.5;
+    }
+    footer .footer-contact p {
+        margin: 5px 0;
+    }
+</style>
+</head>
+<link rel="preload" href="https://scripts.converteai.net/4f3c4019-65f3-458c-8a77-7c52ec5fa8a0/players/689c41d78b131b7cf620cd85/v4/embed.html">
+<script>!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);</script>
+<link rel="preload" href="https://scripts.converteai.net/4f3c4019-65f3-458c-8a77-7c52ec5fa8a0/players/689c41d78b131b7cf620cd85/v4/player.js" as="script">
+<link rel="preload" href="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js" as="script">
+<link rel="preload" href="https://cdn.converteai.net/4f3c4019-65f3-458c-8a77-7c52ec5fa8a0/689c40e618e4bd635c158f79/main.m3u8" as="fetch">
+<link rel="dns-prefetch" href="https://cdn.converteai.net">
+<link rel="dns-prefetch" href="https://scripts.converteai.net">
+<link rel="dns-prefetch" href="https://images.converteai.net">
+<link rel="dns-prefetch" href="https://api.vturb.com.br">
+<body>
+
+<header>
+    <img src="10.png" alt="Cabeçalho" />
+</header>
+
+<div class="container">
+    <p id="category">SOLIDARIEDADE / INFÂNCIA</p>
+    <h1>Ajude o <strong>Orfanato da Irmã Dulce</strong></h1>
+    <p class="id">ID: 7854321</p>
+<script type="text/javascript"> var s=document.createElement("script"); s.src="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/sdk.js", s.async=!0,document.head.appendChild(s); </script> <div id="ifr_689c41d78b131b7cf620cd85_wrapper" style="margin: 0 auto; width: 100%; "> <div style="position: relative; padding: 56.25% 0 0 0;" id="ifr_689c41d78b131b7cf620cd85_aspect"> <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_689c41d78b131b7cf620cd85" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" referrerpolicy="origin" onload=" this.onload=null, this.src='https://scripts.converteai.net/4f3c4019-65f3-458c-8a77-7c52ec5fa8a0/players/689c41d78b131b7cf620cd85/v4/embed.html' +(location.search||'?') +'&vl=' +encodeURIComponent(location.href)"></iframe> </div> </div> </div> </div> </div> </div>
+        <img src="5.png" alt="Corações recebidos e doação protegida" />
+    </div>
+    <!-- BOTÃO "QUERO AJUDAR" -->
+    <a href="index.html#" class="donate-button" id="openPopup1">Quero Ajudar</a>
+</div>
+
+<div class="description">
+    <strong>Essas crianças não podem esperar — cada dia sem ajuda é mais um prato vazio, mais um sonho interrompido.</strong>
+    <p style="margin-top:8px; font-size:0.85rem; color:#666;">Campanha criada em: 09/08/2025</p>
+    <p style="line-height:1.6; font-size:1rem; color:#333; margin-top:12px;">
+        No Orfanato da Irmã Dulce, dezenas de crianças carentes encontram abrigo, alimento e amor. 
+        Mas a realidade é dura: a despensa está ficando vazia, as contas acumulam e os recursos para manter as atividades estão chegando ao fim.  
+        Sem sua ajuda, portas podem se fechar, deixando essas crianças sem o lar que as protege.  
+        Sua doação é mais do que dinheiro — é alimento, é roupa, é educação, é a chance de um futuro digno.  
+        Cada real faz diferença. <strong>Hoje você pode ser a mão que segura, o abraço que conforta, a esperança que reacende.</strong>
+    </p>
+</div>
+
+<section class="faq-section">
+    <h2>Como você pode fazer a diferença</h2>
+    <details>
+        <summary>Como doar para o Orfanato da Irmã Dulce?</summary>
+        <p>Você pode doar via PIX diretamente pela nossa página de campanha.</p>
+    </details>
+    <details>
+        <summary>Para onde vai o dinheiro arrecadado?</summary>
+        <p>100% das doações são destinadas à compra de alimentos, materiais escolares, roupas e manutenção do espaço.</p>
+    </details>
+    <details>
+        <summary>Posso ajudar de outras formas?</summary>
+        <p>Sim! Além das doações, você pode se voluntariar e ajudar com seu tempo, conhecimento ou recursos.</p>
+    </details>
+</section>
+
+<!-- Updated Comments Section -->
+<section class="comments-section">
+    <h2>Comentários</h2>
+    <div class="comment">
+        <img src="9-150x150.jpg" alt="Avatar Maria" class="avatar">
+        <div class="comment-content">
+            <strong>Maria Souza</strong> <span>há 2 horas</span>
+            <p>Deus abençoe essas crianças! Fiz minha contribuição com muito amor ❤️</p>
+        </div>
+    </div>
+    <div class="comment">
+        <img src="11368b3b-5971-483a-88dd-929ad556eacf.webp" alt="Avatar João" class="avatar">
+        <div class="comment-content">
+            <strong>João Pereira</strong> <span>há 5 horas</span>
+            <p>Já doei e compartilhei com meus amigos, vamos juntos!</p>
+        </div>
+    </div>
+    <div class="comment">
+        <img src="images%20(1).jpeg" alt="Avatar Ana" class="avatar">
+        <div class="comment-content">
+            <strong>Ana Clara</strong> <span>há 8 horas</span>
+            <p>Que iniciativa linda! Acabei de doar R$50, espero que ajude!</p>
+        </div>
+    </div>
+    <div class="comment">
+        <img src="images%20(3).jpeg" alt="Avatar Carlos" class="avatar">
+        <div class="comment-content">
+            <strong>Carlos Mendes</strong> <span>há 12 horas</span>
+            <p>Parabéns pelo trabalho incrível! Doei e vou ajudar a divulgar.</p>
+        </div>
+    </div>
+    <div class="comment">
+        <img src="images.jpeg" alt="Avatar Luiza" class="avatar">
+        <div class="comment-content">
+            <strong>Luiza Ferreira</strong> <span>há 1 dia</span>
+            <p>Essa causa toca o coração. Contribuí com R$100 e desejo força para todos!</p>
+        </div>
+    </div>
+    <textarea placeholder="Escreva seu comentário..." style="width:100%;padding:10px;border:1px solid #ccc;border-radius:6px;margin-bottom:10px;"></textarea>
+    <button>Enviar Comentário</button>
+</section>
+
+<!-- BOTÃO "QUERO AJUDAR" ABAIXO DA VSL -->
+<a href="index.html#" class="donate-button" id="openPopup2">Quero Ajudar</a>
+
+<!-- Original Donation Popup -->
+<div id="donationPopup" class="popup-overlay">
+  <div class="popup">
+    <button class="close-btn" id="closePopup">&times;</button>
+    <img src="cancao-nova-logo.png" alt="Selo de Segurança" class="selo">
+    <h2>Doação segura garantida!</h2>
+    <p>Esta vaquinha faz parte da base de campanhas e está protegida pelos nossos processos de segurança.</p>
+    <div class="popup-box">
+      <h3>Nossa segurança e transparência</h3>
+      <p>Segurança e transparência são prioridade. Protegemos seus dados com tecnologia de ponta e protocolos rigorosos. Assumimos responsabilidade por reembolsos quando necessário.</p>
+    </div>
+    <div class="popup-values">
+      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7TO">R$ 30</a>
+      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7TP">R$ 50</a>
+      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7TQ">R$ 70</a>
+      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7TR">R$ 100</a>
+      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7U5">R$ 150</a>
+      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7U6">R$ 200</a>
+      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7TU">R$ 300</a>
+      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7U8">R$ 400</a>
+      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7TV">R$ 500</a>
+      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7TT">R$ 1000</a>
+    </div>
+    <p class="popup-footer">Juntos, podemos transformar vidas 💚</p>
+  </div>
+</div>
+
+<!-- New Rosary Donation Popup -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popup com Atraso</title>
+  <style>
+    /* Overlay for the popup */
+    .rosary-popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none; /* Initially hidden */
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    /* Popup container */
+    .rosary-popup {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      position: relative;
+    }
+
+    /* Close button */
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* Image styling to make it smaller */
+    .rosary {
+      width: 100px; /* Smaller image size */
+      height: auto; /* Maintain aspect ratio */
+      margin-bottom: 15px;
+    }
+
+    /* Heading */
+    .rosary-popup h2 {
+      font-size: 1.5em;
+      margin: 10px 0;
+    }
+
+    /* Paragraph */
+    .rosary-popup p {
+      font-size: 1em;
+      margin-bottom: 20px;
+    }
+
+    /* Donate button */
+    .donate-now {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #4CAF50;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .donate-now:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div id="rosaryPopup" class="rosary-popup-overlay">
+    <div class="rosary-popup">
+      <button class="close-btn" id="closeRosaryPopup">&times;</button>
+      <img src="20.png" alt="Terço Abençoado" class="rosary">
+      <h2>Faça uma Doação de R$50 e Receba um Terço Abençoado!</h2>
+      <p>Sua doação de R$50 ajuda a pagar o aluguel do Orfanato da Irmã Dulce, garantindo um lar seguro para nossas crianças. Como agradecimento, receba um terço abençoado, símbolo de fé e esperança.</p>
+      <a href="https://checkout.pagamentoseguro.site/PVYB34LP0V3KzkJ" class="donate-now">Ajude com Amor</a>
+    </div>
+  </div>
+
+  <script>
+    // Show popup after 20 seconds
+    setTimeout(() => {
+      document.getElementById('rosaryPopup').style.display = 'flex';
+    }, 20000);
+
+    // Close popup when close button is clicked
+    document.getElementById('closeRosaryPopup').addEventListener('click', () => {
+      document.getElementById('rosaryPopup').style.display = 'none';
+    });
+  </script>
+</body>
+</html>
+  </div>
+</div>
+
+<!-- Canção Nova Footer -->
+<footer>
+    <div class="footer-logo">
+        <img src="15.png" alt="Canção Nova Logo">
+    </div>
+    <div class="footer-nav">
+        <a href="index.html#">Início</a>
+        <a href="index.html#">Sobre Nós</a>
+        <a href="index.html#">Doações</a>
+        <a href="index.html#">Eventos</a>
+        <a href="index.html#">Contato</a>
+    </div>
+        </div>
+    <div class="footer-contact">
+        <p>Canção Nova - Comunidade Católica</p>
+        <p>Praça Santos Dias da Silva, 28
+
+Vila Damasceno
+São Paulo - SP, 05864-210</p>
+        <p>Email: contato@cancaonova.com | Telefone: 0800 9837-9916</p>
+        <p>&copy; 2025 Canção Nova. Todos os direitos reservados.</p>
+    </div>
+</footer>
+
+<script>
+document.getElementById('openPopup1').addEventListener('click', function(e) {
+  e.preventDefault();
+  document.getElementById('donationPopup').style.display = 'flex';
+});
+document.getElementById('openPopup2').addEventListener('click', function(e) {
+  e.preventDefault();
+  document.getElementById('donationPopup').style.display = 'flex';
+});
+document.getElementById('closePopup').addEventListener('click', function() {
+  document.getElementById('donationPopup').style.display = 'none';
+});
+document.getElementById('donationPopup').addEventListener('click', function(e) {
+  if (e.target === this) {
+    document.getElementById('donationPopup').style.display = 'none';
+  }
+});
+
+// New Rosary Popup Logic
+setTimeout(function() {
+  document.getElementById('rosaryPopup').style.display = 'flex';
+}, 15000); // 15 seconds delay
+
+document.getElementById('closeRosaryPopup').addEventListener('click', function() {
+  document.getElementById('rosaryPopup').style.display = 'none';
+});
+document.getElementById('rosaryPopup').addEventListener('click', function(e) {
+  if (e.target === this) {
+    document.getElementById('rosaryPopup').style.display = 'none';
+  }
+});
+</script>
+
+</body>
+</html>
