@@ -5,6 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Ajude o Orfanato da Irmã Dulce</title>
 
+<!-- Facebook Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+ fbq('init', '1242602077552157'); 
+fbq('track', 'PageView');
+</script>
+<noscript>
+ <img height="1" width="1" 
+src="https://www.facebook.com/tr?id=1242602077552157&ev=PageView
+&noscript=1"/>
+</noscript>
+<!-- End Facebook Pixel Code -->
 <style>
     * {
         box-sizing: border-box;
@@ -54,12 +73,21 @@
         color: #666;
         margin-bottom: 15px;
     }
-    .main-image {
+    .video-container {
         width: 100%;
+        margin: 20px 0;
+        position: relative;
+        overflow: hidden;
+        padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
         border-radius: 8px;
-        margin-top: 10px;
-        display: block;
-        object-fit: cover;
     }
     .hearts {
         display: flex;
@@ -404,15 +432,6 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
-    /* Simulated PIX code for demo */
-    .simulated-pix {
-        font-family: monospace;
-        background: #f0f0f0;
-        padding: 10px;
-        border-radius: 5px;
-        margin: 15px 0;
-        word-break: break-all;
-    }
 </style>
 </head>
 <body>
@@ -425,6 +444,15 @@
     <p id="category">SOLIDARIEDADE / INFÂNCIA</p>
     <h1>Ajude o <strong>Orfanato da Irmã Dulce</strong></h1>
     <p class="id">ID: 7854321</p>
+    
+    <!-- VSL (Video Sales Letter) -->
+    <div class="video-container">
+        <iframe 
+            src="https://scripts.converteai.net/4f3c4019-65f3-458c-8a77-7c52ec5fa8a0/players/689c41d78b131b7cf620cd85/v4/embed.html" 
+            frameborder="0" 
+            allowfullscreen>
+        </iframe>
+    </div>
     
     <div class="hearts">
         <img src="5.png" alt="Corações recebidos e doação protegida" />
@@ -439,7 +467,7 @@
     <p style="margin-top:8px; font-size:0.85rem; color:#666;">Campanha criada em: 09/08/2025</p>
     <p style="line-height:1.6; font-size:1rem; color:#333; margin-top:12px;">
         No Orfanato da Irmã Dulce, dezenas de crianças carentes encontram abrigo, alimento e amor. 
-        Mas a realidadade é dura: a despensa está ficando vazia, as contas acumulam e os recursos para manter as atividades estão chegando ao fim.  
+        Mas a realidade é dura: a despensa está ficando vazia, as contas acumulam e os recursos para manter as atividades estão chegando ao fim.  
         Sem sua ajuda, portas podem se fechar, deixando essas crianças sem o lar que as protege.  
         Sua doação é mais do que dinheiro — é alimento, é roupa, é educação, é a chance de um futuro digno.  
         Cada real faz diferença. <strong>Hoje você pode ser a mão que segura, o abraço que conforta, a esperança que reacende.</strong>
@@ -579,10 +607,7 @@
     </div>
     <div class="footer-contact">
         <p>Canção Nova - Comunidade Católica</p>
-        <p>Praça Santos Dias da Silva, 28
-
-Vila Damasceno
-São Paulo - SP, 05864-210</p>
+        <p>Praça Santos Dias da Silva, 28 Vila Damasceno<br>São Paulo - SP, 05864-210</p>
         <p>Email: contato@cancaonova.com | Telefone: 0800 9837-9916</p>
         <p>&copy; 2025 Canção Nova. Todos os direitos reservados.</p>
     </div>
@@ -591,6 +616,8 @@ São Paulo - SP, 05864-210</p>
 <script>
 // Variáveis globais
 let currentAmount = 0;
+let lastRequestTime = 0;
+const REQUEST_DELAY = 1000; // 1 segundo entre requisições
 
 // Elementos da interface
 const donationPopup = document.getElementById('donationPopup');
@@ -656,6 +683,13 @@ document.querySelectorAll('.popup-values a, .donate-now').forEach(button => {
 
 // Função para gerar código PIX
 function generatePixCode(amount) {
+  // Previne múltiplas requisições em curto espaço de tempo
+  const now = Date.now();
+  if (now - lastRequestTime < REQUEST_DELAY) {
+    return;
+  }
+  lastRequestTime = now;
+  
   // Mostra o popup do PIX com loading
   pixPopup.style.display = 'flex';
   loadingElement.style.display = 'block';
@@ -683,7 +717,7 @@ function generatePixCode(amount) {
       "items": [
         {
           "unitPrice": amountInCents,
-          "title": "Total",
+          "title": `Doação de R$ ${amount} para o Orfanato da Irmã Dulce`,
           "quantity": 1,
           "tangible": false
         }
@@ -697,10 +731,13 @@ function generatePixCode(amount) {
     return response.json();
   })
   .then(data => {
+    console.log('Resposta da API:', data);
+    
     // Verifica se a resposta contém o código PIX
-    // Nota: A estrutura exata da resposta pode variar dependendo da API
-    // Você pode precisar ajustar isso conforme a documentação da NivusPay
-    const pixCode = data.pixCode || data.qrCode || data.payload;
+    // A estrutura exata pode variar - ajuste conforme a documentação da NivusPay
+    const pixCode = data.pixCode || data.qrCode || data.payload || 
+                   (data.payment && data.payment.pixCode) || 
+                   (data.transaction && data.transaction.pixCode);
     
     if (pixCode) {
       // Exibe o código PIX
@@ -708,7 +745,7 @@ function generatePixCode(amount) {
       loadingElement.style.display = 'none';
       pixContent.style.display = 'block';
     } else {
-      throw new Error('Código PIX não encontrado na resposta');
+      throw new Error('Código PIX não encontrado na resposta da API');
     }
   })
   .catch(error => {
@@ -716,7 +753,8 @@ function generatePixCode(amount) {
     
     // Para fins de demonstração, vamos usar um código PIX simulado
     // Em produção, remova esta parte e mostre apenas a mensagem de erro
-    const simulatedPix = `00020126580014br.gov.bcb.pix0136c4d8325a-8e7a-4d5a-bc4d-8325a8e7a4d50204Doacao${amount}0304Orfanato520400005303986540${amount.toFixed(2)}5802BR5913OrfanatoDulce6008SaoPaulo62290525mpqrinter1234567890123496304`;
+    const timestamp = new Date().getTime();
+    const simulatedPix = `00020126580014br.gov.bcb.pix0136${timestamp}${amount}0204Doacao${amount}0304Orfanato520400005303986540${amount}.005802BR5913OrfanatoDulce6008SaoPaulo62290525mpqrinter${timestamp}6304`;
     
     pixCodeElement.textContent = simulatedPix;
     loadingElement.style.display = 'none';
@@ -752,7 +790,7 @@ copyPixButton.addEventListener('click', function() {
 // New Rosary Popup Logic
 setTimeout(function() {
   rosaryPopup.style.display = 'flex';
-}, 1500000000); // 15 seconds delay
+}, 15000); // 15 seconds delay
 </script>
 
 </body>
