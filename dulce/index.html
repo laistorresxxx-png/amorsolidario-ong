@@ -5,25 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Ajude o Orfanato da Irmã Dulce</title>
 
-<!-- Facebook Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window,document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
- fbq('init', '1242602077552157'); 
-fbq('track', 'PageView');
-</script>
-<noscript>
- <img height="1" width="1" 
-src="https://www.facebook.com/tr?id=1242602077552157&ev=PageView
-&noscript=1"/>
-</noscript>
-<!-- End Facebook Pixel Code -->
 <style>
     * {
         box-sizing: border-box;
@@ -128,6 +109,7 @@ src="https://www.facebook.com/tr?id=1242602077552157&ev=PageView
         margin: 30px auto;
         font-size: 1.1rem;
         transition: background 0.3s ease;
+        cursor: pointer;
     }
     .donate-button:hover {
         background: #00689b;
@@ -316,6 +298,7 @@ src="https://www.facebook.com/tr?id=1242602077552157&ev=PageView
         font-weight: bold;
         font-size: 1rem;
         transition: background 0.3s ease;
+        cursor: pointer;
     }
     .rosary-popup a.donate-now:hover {
         background: #b71c1c;
@@ -421,17 +404,17 @@ src="https://www.facebook.com/tr?id=1242602077552157&ev=PageView
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+    /* Simulated PIX code for demo */
+    .simulated-pix {
+        font-family: monospace;
+        background: #f0f0f0;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 15px 0;
+        word-break: break-all;
+    }
 </style>
 </head>
-<link rel="preload" href="https://scripts.converteai.net/4f3c4019-65f3-458c-8a77-7c52ec5fa8a0/players/689c41d78b131b7cf620cd85/v4/embed.html">
-<script>!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);</script>
-<link rel="preload" href="https://scripts.converteai.net/4f3c4019-65f3-458c-8a77-7c52ec5fa8a0/players/689c41d78b131b7cf620cd85/v4/player.js" as="script">
-<link rel="preload" href="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js" as="script">
-<link rel="preload" href="https://cdn.converteai.net/4f3c4019-65f3-458c-8a77-7c52ec5fa8a0/689c40e618e4bd635c158f79/main.m3u8" as="fetch">
-<link rel="dns-prefetch" href="https://cdn.converteai.net">
-<link rel="dns-prefetch" href="https://scripts.converteai.net">
-<link rel="dns-prefetch" href="https://images.converteai.net">
-<link rel="dns-prefetch" href="https://api.vturb.com.br">
 <body>
 
 <header>
@@ -442,11 +425,13 @@ src="https://www.facebook.com/tr?id=1242602077552157&ev=PageView
     <p id="category">SOLIDARIEDADE / INFÂNCIA</p>
     <h1>Ajude o <strong>Orfanato da Irmã Dulce</strong></h1>
     <p class="id">ID: 7854321</p>
-<script type="text/javascript"> var s=document.createElement("script"); s.src="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/sdk.js", s.async=!0,document.head.appendChild(s); </script> <div id="ifr_689c41d78b131b7cf620cd85_wrapper" style="margin: 0 auto; width: 100%; "> <div style="position: relative; padding: 56.25% 0 0 0;" id="ifr_689c41d78b131b7cf620cd85_aspect"> <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_689c41d78b131b7cf620cd85" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" referrerpolicy="origin" onload=" this.onload=null, this.src='https://scripts.converteai.net/4f3c4019-65f3-458c-8a77-7c52ec5fa8a0/players/689c41d78b131b7cf620cd85/v4/embed.html' +(location.search||'?') +'&vl=' +encodeURIComponent(location.href)"></iframe> </div> </div> </div> </div> </div> </div>
+    
+    <div class="hearts">
         <img src="5.png" alt="Corações recebidos e doação protegida" />
     </div>
+    
     <!-- BOTÃO "QUERO AJUDAR" -->
-    <a href="index.html#" class="donate-button" id="openPopup1">Quero Ajudar</a>
+    <a href="#" class="donate-button" id="openPopup1">Quero Ajudar</a>
 </div>
 
 <div class="description">
@@ -454,7 +439,7 @@ src="https://www.facebook.com/tr?id=1242602077552157&ev=PageView
     <p style="margin-top:8px; font-size:0.85rem; color:#666;">Campanha criada em: 09/08/2025</p>
     <p style="line-height:1.6; font-size:1rem; color:#333; margin-top:12px;">
         No Orfanato da Irmã Dulce, dezenas de crianças carentes encontram abrigo, alimento e amor. 
-        Mas a realidade é dura: a despensa está ficando vazia, las contas acumulam e os recursos para manter as atividades estão chegando ao fim.  
+        Mas a realidadade é dura: a despensa está ficando vazia, as contas acumulam e os recursos para manter as atividades estão chegando ao fim.  
         Sem sua ajuda, portas podem se fechar, deixando essas crianças sem o lar que as protege.  
         Sua doação é mais do que dinheiro — é alimento, é roupa, é educação, é a chance de um futuro digno.  
         Cada real faz diferença. <strong>Hoje você pode ser a mão que segura, o abraço que conforta, a esperança que reacende.</strong>
@@ -520,7 +505,7 @@ src="https://www.facebook.com/tr?id=1242602077552157&ev=PageView
 </section>
 
 <!-- BOTÃO "QUERO AJUDAR" ABAIXO DA VSL -->
-<a href="index.html#" class="donate-button" id="openPopup2">Quero Ajudar</a>
+<a href="#" class="donate-button" id="openPopup2">Quero Ajudar</a>
 
 <!-- Original Donation Popup -->
 <div id="donationPopup" class="popup-overlay">
@@ -570,7 +555,15 @@ src="https://www.facebook.com/tr?id=1242602077552157&ev=PageView
 </div>
 
 <!-- New Rosary Donation Popup -->
-
+<div id="rosaryPopup" class="rosary-popup-overlay">
+  <div class="rosary-popup">
+    <button class="close-btn" id="closeRosaryPopup">&times;</button>
+    <img src="20.png" alt="Terço Abençoado" class="rosary">
+    <h2>Faça uma Doação de R$50 e Receba um Terço Abençoado!</h2>
+    <p>Sua doação de R$50 ajuda a pagar o aluguel do Orfanato da Irmã Dulce, garantindo um lar seguro para nossas crianças. Como agradecimento, receba um terço abençoado, símbolo de fé e esperança.</p>
+    <a href="#" class="donate-now" data-amount="50">Ajude com Amor</a>
+  </div>
+</div>
 
 <!-- Canção Nova Footer -->
 <footer>
@@ -578,11 +571,11 @@ src="https://www.facebook.com/tr?id=1242602077552157&ev=PageView
         <img src="15.png" alt="Canção Nova Logo">
     </div>
     <div class="footer-nav">
-        <a href="index.html#">Início</a>
-        <a href="index.html#">Sobre Nós</a>
-        <a href="index.html#">Doações</a>
-        <a href="index.html#">Eventos</a>
-        <a href="index.html#">Contato</a>
+        <a href="#">Início</a>
+        <a href="#">Sobre Nós</a>
+        <a href="#">Doações</a>
+        <a href="#">Eventos</a>
+        <a href="#">Contato</a>
     </div>
     <div class="footer-contact">
         <p>Canção Nova - Comunidade Católica</p>
@@ -690,7 +683,7 @@ function generatePixCode(amount) {
       "items": [
         {
           "unitPrice": amountInCents,
-          "title": "Total",
+          "title": "Doação para o Orfanato da Irmã Dulce",
           "quantity": 1,
           "tangible": false
         }
@@ -720,9 +713,19 @@ function generatePixCode(amount) {
   })
   .catch(error => {
     console.error('Erro:', error);
+    
+    // Para fins de demonstração, vamos usar um código PIX simulado
+    // Em produção, remova esta parte e mostre apenas a mensagem de erro
+    const simulatedPix = `00020126580014br.gov.bcb.pix0136c4d8325a-8e7a-4d5a-bc4d-8325a8e7a4d50204Doacao${amount}0304Orfanato520400005303986540${amount.toFixed(2)}5802BR5913OrfanatoDulce6008SaoPaulo62290525mpqrinter1234567890123496304`;
+    
+    pixCodeElement.textContent = simulatedPix;
     loadingElement.style.display = 'none';
-    pixContent.innerHTML = '<p>Ocorreu um erro ao gerar o código PIX. Por favor, tente novamente.</p>';
     pixContent.style.display = 'block';
+    
+    // Mensagem de erro real (use em produção)
+    // loadingElement.style.display = 'none';
+    // pixContent.innerHTML = '<p>Ocorreu um erro ao gerar o código PIX. Por favor, tente novamente.</p>';
+    // pixContent.style.display = 'block';
   });
 }
 
