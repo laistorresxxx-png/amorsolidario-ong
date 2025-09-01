@@ -481,16 +481,16 @@ src="https://www.facebook.com/tr?id=1242602077552157&ev=PageView
       <p>Segurança e transparência são prioridade. Protegemos seus dados com tecnologia de ponta e protocolos rigorosos. Assumimos responsabilidade por reembolsos quando necessário.</p>
     </div>
     <div class="popup-values">
-      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7TO">R$ 30</a>
-      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7TP">R$ 50</a>
-      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7TQ">R$ 70</a>
-      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7TR">R$ 100</a>
-      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7U5">R$ 150</a>
-      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7U6">R$ 200</a>
-      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7TU">R$ 300</a>
-      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7U8">R$ 400</a>
-      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7TV">R$ 500</a>
-      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7TT">R$ 1000</a>
+      <a href="#" data-amount="30">R$ 30</a>
+      <a href="#" data-amount="50">R$ 50</a>
+      <a href="#" data-amount="70">R$ 70</a>
+      <a href="#" data-amount="100">R$ 100</a>
+      <a href="#" data-amount="150">R$ 150</a>
+      <a href="#" data-amount="200">R$ 200</a>
+      <a href="#" data-amount="300">R$ 300</a>
+      <a href="#" data-amount="400">R$ 400</a>
+      <a href="#" data-amount="500">R$ 500</a>
+      <a href="#" data-amount="1000">R$ 1000</a>
     </div>
     <p class="popup-footer">Juntos, podemos transformar vidas 💚</p>
   </div>
@@ -576,13 +576,25 @@ src="https://www.facebook.com/tr?id=1242602077552157&ev=PageView
   </style>
 </head>
 <body>
+
+  <div id="pixModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; z-index:2000;">
+  <div style="background:#fff; padding:20px; border-radius:10px; max-width:400px; width:90%; text-align:center; position:relative;">
+    <button id="closePixModal" style="position:absolute; top:10px; right:10px; font-size:20px; background:none; border:none; cursor:pointer;">&times;</button>
+    <h2>PIX Copia e Cola</h2>
+    <textarea id="pixCopiaCola" style="width:90%; height:100px; padding:10px; font-size:1rem; resize:none;" readonly></textarea>
+    <br>
+    <button id="copyPixButton" style="margin-top:10px; padding:10px 20px; background:#0082c0; color:#fff; border:none; border-radius:6px; cursor:pointer;">Copiar PIX</button>
+  </div>
+  </div>
+
+  
   <div id="rosaryPopup" class="rosary-popup-overlay">
     <div class="rosary-popup">
       <button class="close-btn" id="closeRosaryPopup">&times;</button>
       <img src="20.png" alt="Terço Abençoado" class="rosary">
       <h2>Faça uma Doação de R$50 e Receba um Terço Abençoado!</h2>
       <p>Sua doação de R$50 ajuda a pagar o aluguel do Orfanato da Irmã Dulce, garantindo um lar seguro para nossas crianças. Como agradecimento, receba um terço abençoado, símbolo de fé e esperança.</p>
-      <a href="https://checkout.amorsolidario-ong.online/VCCL1O8SC7TP" class="donate-now">Ajude com Amor</a>
+      <a href="#" class="donate-now" data-amount="50">Ajude com Amor</a>
     </div>
   </div>
 
@@ -658,6 +670,74 @@ document.getElementById('rosaryPopup').addEventListener('click', function(e) {
   }
 });
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const apiKey = "b8e3fcbd-7940-4a34-864f-68b84bd77e7b"; 
+  const apiUrl = "https://pay.nivuspay.com.br/api/v1/transaction.purchase";
+
+  const pixModal = document.getElementById("pixModal");
+  const pixTextarea = document.getElementById("pixCopiaCola");
+
+  document.getElementById("closePixModal").addEventListener("click", () => pixModal.style.display = "none");
+  document.getElementById("copyPixButton").addEventListener("click", () => {
+    pixTextarea.select();
+    pixTextarea.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+    alert("PIX copiado para a área de transferência!");
+  });
+
+  async function createPixTransaction(amount) {
+    const data = {
+      name: "Rizia Regia Silva",
+      email: "rizia.regia@example.com",
+      cpf: "01101101105",
+      phone: "16999350383",
+      paymentMethod: "PIX",
+      amount: amount * 100,
+      traceable: true,
+      items: [
+        { unitPrice: amount * 100, title: "Pedido", quantity: 1, tangible: false }
+      ]
+    };
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": apiKey
+        },
+        body: JSON.stringify(data)
+      });
+      const result = await response.json();
+      return result.pixCopiaCola || result.pix || result.qrCode || "";
+    } catch (error) {
+      console.error("Erro ao criar PIX:", error);
+      alert("Erro ao gerar PIX. Tente novamente.");
+      return "";
+    }
+  }
+
+  document.querySelectorAll(".popup-values a").forEach(a => {
+    a.addEventListener("click", async function(e) {
+      e.preventDefault();
+      const amount = parseInt(this.getAttribute("data-amount"));
+      if(!amount) return;
+      pixTextarea.value = "Gerando PIX...";
+      pixModal.style.display = "flex";
+
+      const pixCode = await createPixTransaction(amount);
+      if(pixCode) {
+        pixTextarea.value = pixCode;
+      } else {
+        pixTextarea.value = "Erro ao gerar PIX";
+      }
+    });
+  });
+});
+</script>
+
 
 </body>
 </html>
