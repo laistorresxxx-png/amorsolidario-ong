@@ -687,54 +687,62 @@ document.addEventListener("DOMContentLoaded", function() {
     alert("PIX copiado para a área de transferência!");
   });
 
-  async function createPixTransaction(amount) {
-    const data = {
-      name: "Rizia Regia Silva",
-      email: "rizia.regia@example.com",
-      cpf: "01101101105",
-      phone: "16999350383",
-      paymentMethod: "PIX",
-      amount: amount * 100,
-      traceable: true,
-      items: [
-        { unitPrice: amount * 100, title: "Pedido", quantity: 1, tangible: false }
-      ]
-    };
-    try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": apiKey
-        },
-        body: JSON.stringify(data)
-      });
-      const result = await response.json();
-      return result.pixCopiaCola || result.pix || result.qrCode || "";
-    } catch (error) {
-      console.error("Erro ao criar PIX:", error);
-      alert("Erro ao gerar PIX. Tente novamente.");
-      return "";
-    }
-  }
+async function createPixTransaction(amount) {
+  const data = {
+    name: "Rizia Regia Silva",
+    email: "rizia.regia@example.com",
+    cpf: "01101101105",
+    phone: "16999350383",
+    paymentMethod: "PIX",
+    amount: amount * 100,
+    traceable: true,
+    items: [
+      { unitPrice: amount * 100, title: "Pedido", quantity: 1, tangible: false }
+    ]
+  };
 
-  document.querySelectorAll(".popup-values a").forEach(a => {
-    a.addEventListener("click", async function(e) {
-      e.preventDefault();
-      const amount = parseInt(this.getAttribute("data-amount"));
-      if(!amount) return;
-      pixTextarea.value = "Gerando PIX...";
-      pixModal.style.display = "flex";
-
-      const pixCode = await createPixTransaction(amount);
-      if(pixCode) {
-        pixTextarea.value = pixCode;
-      } else {
-        pixTextarea.value = "Erro ao gerar PIX";
-      }
+  try {
+    const response = await fetch("https://pay.nivuspay.com.br/api/v1/transaction.purchase", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "b8e3fcbd-7940-4a34-864f-68b84bd77e7b"
+      },
+      body: JSON.stringify(data)
     });
+
+    const result = await response.json();
+
+    // Corrige caso o código PIX esteja dentro de transaction
+    const pixCode =
+      result.pixCopiaCola ||
+      result.pix ||
+      (result.transaction && result.transaction.pixCopiaCola) ||
+      "";
+
+    if (!pixCode) throw new Error("PIX não encontrado");
+
+    return pixCode;
+  } catch (error) {
+    console.error("Erro ao criar PIX:", error);
+    alert("Erro ao gerar PIX. Tente novamente.");
+    return "";
+  }
+}
+
+
+document.querySelectorAll(".popup-values a").forEach(a => {
+  a.addEventListener("click", async function(e) {
+    e.preventDefault(); // evita abrir o link
+    const valor = parseInt(this.textContent.replace(/\D/g,'')); 
+    const pixCopiaCola = await createPixTransaction(valor);
+    if (!pixCopiaCola) return;
+    document.getElementById("pixCopiaCola").value = pixCopiaCola;
+    pixModal.style.display = "flex";
   });
+});
+
 });
 </script>
 
